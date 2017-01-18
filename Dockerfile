@@ -1,1 +1,1 @@
-FROM brunolm/node-image:6.2.0-onbuild
+FROM brunolm/node-image:7.4.0-onbuild
