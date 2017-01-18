@@ -6,7 +6,8 @@
   "scripts": {
     "start": "ts-node src/index.ts",
     "dev": "nodemon --watch 'src/**/*.ts' --ignore 'spec/**/*.ts' --exec 'ts-node' src/index.ts",
-    "test": "mocha --compilers ts:ts-node/register,tsx:ts-node/register spec/**/*.ts"
+    "test": "npm run lint && mocha --compilers ts:ts-node/register,tsx:ts-node/register spec/**/*.ts",
+    "lint": "tslint src/**/*.ts spec/**/*.ts"
   },
   "keywords": [
     "slack",
