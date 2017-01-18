@@ -1,0 +1,9 @@
+local:
+  image: brunolm/node-image:6.2.0-onbuild
+  command: npm run dev
+  environment:
+    NODE_ENV: development
+
+ci:
+  build: .
+  command: npm test

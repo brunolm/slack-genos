@@ -1,0 +1,36 @@
+{
+  "name": "slack-genos",
+  "version": "1.0.0",
+  "description": "Class S hero bot for Slack!",
+  "main": "src/index.ts",
+  "scripts": {
+    "start": "ts-node src/index.ts",
+    "dev": "nodemon --watch 'src/**/*.ts' --ignore 'spec/**/*.ts' --exec 'ts-node' src/index.ts",
+    "test": "mocha --compilers ts:ts-node/register,tsx:ts-node/register spec/**/*.ts"
+  },
+  "keywords": [
+    "slack",
+    "bot",
+    "genos",
+    "one punch man"
+  ],
+  "author": {
+    "email": "brunolm7@gmail.com",
+    "name": "Bruno Leonardo Michels",
+    "url": "http://codingiwse.com/"
+  },
+  "license": "ISC",
+  "dependencies": {
+    "@types/node": "^7.0.0",
+    "ts-node": "^2.0.0",
+    "typescript": "^2.1.5"
+  },
+  "devDependencies": {
+    "@types/chai": "^3.4.34",
+    "@types/mocha": "^2.2.38",
+    "chai": "^3.5.0",
+    "mocha": "^3.2.0",
+    "nodemon": "^1.11.0",
+    "tslint": "^4.3.1"
+  }
+}
