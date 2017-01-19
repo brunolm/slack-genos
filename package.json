@@ -5,7 +5,7 @@
   "main": "src/index.ts",
   "scripts": {
     "start": "ts-node src/index.ts",
-    "dev": "nodemon --watch 'src/**/*.ts' --ignore 'spec/**/*.ts' --exec 'ts-node' src/index.ts",
+    "dev": "nodemon --watch src/**/*.ts --ignore spec/**/*.ts -L --exec ts-node src/index.ts",
     "test": "npm run lint && mocha --compilers ts:ts-node/register,tsx:ts-node/register spec/**/*.ts",
     "lint": "tslint src/**/*.ts spec/**/*.ts"
   },
@@ -22,7 +22,10 @@
   },
   "license": "ISC",
   "dependencies": {
+    "@types/log4js": "0.0.32",
     "@types/node": "^7.0.0",
+    "log4js": "^1.1.0",
+    "slack": "^8.1.2",
     "ts-node": "^2.0.0",
     "typescript": "^2.1.5"
   },

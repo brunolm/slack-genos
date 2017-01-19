@@ -3,6 +3,8 @@ local:
   command: npm run dev
   environment:
     NODE_ENV: development
+    BOT_NAME: genos
+    BOT_TOKEN: #
   volumes:
     - './:/usr/src/app'
 
