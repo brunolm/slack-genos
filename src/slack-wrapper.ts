@@ -4,7 +4,7 @@ const token = process.env.BOT_TOKEN;
 
 let botInfo: slack.SlackSelfInfo;
 
-export function getBotInfo() {
+export function getBotInfo(): Promise<slack.SlackSelfInfo> {
   if (botInfo) {
     return Promise.resolve(botInfo);
   }

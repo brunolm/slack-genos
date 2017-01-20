@@ -10,7 +10,7 @@ const log = logger('index');
 const token = process.env.BOT_TOKEN;
 const bot = slack.rtm.client();
 
-const commands = { };
+const commands = {};
 
 bot.hello(async () => {
   try {
@@ -20,8 +20,11 @@ bot.hello(async () => {
     const commandFiles = fs.readdirSync(path.join(__dirname, './commands'));
 
     for (let commandFile of commandFiles) {
-      commands[commandFile.replace(/[.].*?$/, '')] =
-        require(`./commands/${commandFile}`).default;
+      let commandPackage = require(`./commands/${commandFile}`);
+      commands[commandFile.replace(/[.].*?$/, '')] = {
+        command: commandPackage.default,
+        help: commandPackage.help,
+      };
     }
 
     log.info(`Loaded ${commandFiles.length} commands. ${commandFiles.join(', ')}`);
@@ -40,16 +43,23 @@ bot.message(async (message) => {
         const { user } = await slackw.getUserInfo(message.user);
         log.info(`${user.name} (${user.id}) requested the command ${message.text}`);
 
-        const [, commandName] = message.text.match(/^[.]([\S]*)/);
-        const text = message.text.slice(message.text.split(/\s/, 1)[0].length + 1);
-        const args = message.text.split(/\s/g);
+        try {
+          const [, commandName] = message.text.match(/^[.]([\S]*)/);
+          const text = message.text.slice(message.text.split(/\s/, 1)[0].length + 1);
+          const args = message.text.split(/\s/g);
 
-        await commands[commandName]({
-          user,
-          commandName,
-          text,
-          args
-        });
+          const params = { message, user, commandName, text, args };
+
+          if (args.length >= 2 && /-h|--help/i.test(args[1])) {
+            await commands[commandName].help(params);
+          }
+          else {
+            await commands[commandName].command(params);
+          }
+        }
+        catch (err) {
+          log.error('Command error', err);
+        }
       }
     }
   }
