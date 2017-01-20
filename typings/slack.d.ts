@@ -1,16 +1,63 @@
 declare module "slack" {
+  export const auth: SlackAuth;
   export const api: SlackAPI;
   export const rtm: SlackRMT;
   export const chat: SlackChat;
+  export const users: SlackUsers;
+
+  interface SlackUserInfo {
+    ok: boolean;
+    user: {
+      id: string;
+      name: string;
+      deleted: boolean;
+      color: string;
+      profile: {
+        first_name: string;
+        last_name: string;
+        real_name: string;
+        email: string;
+        skype: string;
+        phone: string;
+        image_24: string;
+        image_32: string;
+        image_48: string;
+        image_72: string;
+        image_192: string;
+      },
+      is_admin: boolean;
+      is_owner: boolean;
+      has_2fa: boolean;
+    };
+  }
+
+  interface SlackSelfInfo {
+    ok: boolean;
+    url: string;
+    team: string;
+    user: string;
+    team_id: string;
+    user_id: string;
+  }
+
+  interface SlackUsers {
+    info: ({ token, user }: { token: string; user: string; }, callback: SlackCallback<SlackUserInfo>) => void;
+  }
+
+  type SlackCallback<T> = (err, data: T) => void;
+
+  interface SlackAuth {
+    test: ({ token }, callback: SlackCallback<SlackSelfInfo>) => void;
+  }
 
   interface PostMessage {
-    token: string;
+    token?: string;
     channel: string;
     text: string;
     as_user?: boolean;
   }
   interface SlackChat {
-    postMessage: (message: PostMessage, callback: (err, data) => void) => void;
+    postMessage: (message: PostMessage, callback: SlackCallback<SlackSelfInfo>) => void;
   }
 
   interface SlackAPI {
@@ -67,9 +114,11 @@ declare module "slack" {
 
   interface Bot {
     handlers: {
-      started: any[],
+      started: any[];
+      hello: any[];
       message: any[];
     },
+    hello: (handler: ({ type }: { type: string; }) => void) => void;
     message: (handler: (message: SlackMessage) => void) => void;
     close: () => void;
     listen: (params, callback) => void;
