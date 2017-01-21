@@ -11,3 +11,15 @@ export function readdir(dirPath): Promise<string[]> {
     });
   });
 }
+
+export function stat(entityPath: string | Buffer): Promise<fs.Stats> {
+  return new Promise((resolve, reject) => {
+    fs.stat(entityPath, (err, stats) => {
+      if (err) {
+        return reject(err);
+      }
+
+      return resolve(stats);
+    });
+  });
+}
