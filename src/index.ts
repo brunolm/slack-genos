@@ -23,7 +23,6 @@ bot.hello(async () => {
       let commandPackage = require(`./commands/${commandFile}`);
       commands[commandFile.replace(/[.].*?$/, '')] = {
         command: commandPackage.default,
-        help: commandPackage.help,
       };
     }
 
@@ -51,7 +50,10 @@ bot.message(async (message) => {
           const params = { message, user, commandName, text, args };
 
           if (args.length >= 2 && /-h|--help/i.test(args[1])) {
-            await commands[commandName].help(params);
+            await slackw.post({
+              channel: message.channel,
+              text: fs.readFileSync(path.join(__dirname, `./commands/${commandName}.md`)).toString(),
+            });
           }
           else {
             await commands[commandName].command(params);

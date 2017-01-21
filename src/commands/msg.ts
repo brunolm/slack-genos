@@ -10,19 +10,4 @@ const msg: Command = async ({ args, text }) => {
   });
 };
 
-const helpCmd: Command = async ({ message }) => {
-  await slackw.post({
-    channel: message.channel,
-    text: `Usage: \`.msg <#channel|@user> text\`
-
-Example:
-
-\`\`\`
-.msg #random Incinerate!
-\`\`\`
-`,
-  });
-};
-
 export default msg;
-export const help = helpCmd;
