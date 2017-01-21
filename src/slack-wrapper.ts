@@ -44,6 +44,18 @@ export function getUserInfo(user: string): Promise<slack.SlackUserInfo> {
   });
 }
 
+export function getChannelInfo(channel: string): Promise<slack.SlackChannelInfo> {
+  return new Promise((resolve, reject) => {
+    slack.channels.info({ token, channel }, (err, data) => {
+      if (err) {
+        return reject(err);
+      }
+
+      return resolve(data);
+    });
+  });
+}
+
 export function extractId(entityId: string) {
   return (`${entityId}`.match(/<(?:@|#)([^|]+)|/)[1]).replace(/[><]/g, '');
 }

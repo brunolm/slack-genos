@@ -2,8 +2,35 @@ declare module "slack" {
   export const auth: SlackAuth;
   export const api: SlackAPI;
   export const rtm: SlackRMT;
+  export const channels: SlackChannels;
   export const chat: SlackChat;
   export const users: SlackUsers;
+
+  interface SlackChannelInfo {
+    ok: boolean;
+    channel: {
+      id: string;
+      name: string;
+
+      created: number;
+      creator: string;
+
+      is_archived: boolean;
+      is_general: boolean;
+      is_member: boolean;
+      is_starred: boolean;
+
+      members: string[];
+
+      topic: any;
+      purpose: any;
+
+      last_read: number;
+      latest: any;
+      unread_count: number;
+      unread_count_display: number;
+    }
+  }
 
   interface SlackUserInfo {
     ok: boolean;
@@ -38,6 +65,10 @@ declare module "slack" {
     user: string;
     team_id: string;
     user_id: string;
+  }
+
+  interface SlackChannels {
+    info: ({ token, channel }: { token: string; channel: string; }, callback: SlackCallback<SlackChannelInfo>) => void;
   }
 
   interface SlackUsers {
