@@ -12,21 +12,37 @@ const bot = slack.rtm.client();
 
 const commands = {};
 
+function loadCommands(dirPath: string, result: string[] = []) {
+  const commandFiles = fs.readdirSync(dirPath);
+
+  for (let commandFile of commandFiles) {
+    let dir = path.join(dirPath, commandFile);
+    if (fs.statSync(dir).isDirectory()) {
+      loadCommands(path.join(dirPath, commandFile), result);
+    }
+    else if (/[.]ts$/.test(commandFile)) {
+      result.push(dir);
+    }
+  }
+
+  return result;
+}
+
 bot.hello(async () => {
   try {
     const info = await slackw.getBotInfo();
-    log.info(info as any);
+    log.info('Bot info', info);
 
-    const commandFiles = fs.readdirSync(path.join(__dirname, './commands'));
+    const commandFiles = loadCommands(path.join(__dirname, './commands'));
 
     for (let commandFile of commandFiles) {
-      let commandPackage = require(`./commands/${commandFile}`);
-      commands[commandFile.replace(/[.].*?$/, '')] = {
+      let commandPackage = require(commandFile);
+      commands[path.basename(commandFile, '.ts')] = {
         command: commandPackage.default,
       };
     }
 
-    log.info(`Loaded ${commandFiles.length} commands. ${commandFiles.join(', ')}`);
+    log.info(`Loaded ${commandFiles.length} commands. ${Object.keys(commands).join(', ')}`);
   }
   catch (err) {
     log.error(err);
