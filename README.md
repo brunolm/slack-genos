@@ -1,5 +1,7 @@
 # slack-genos
 
+[![Build Status](https://travis-ci.org/brunolm/slack-genos.svg?branch=master)](https://travis-ci.org/brunolm/slack-genos)
+
 Class S hero bot for Slack!
 
 ## How it works
