@@ -1,5 +1,5 @@
 local:
-  image: brunolm/node-image:7.4.0-onbuild
+  image: node:8.5.0
   command: npm run dev
   environment:
     NODE_ENV: development

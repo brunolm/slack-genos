@@ -1,15 +1,38 @@
 # Contributing
 
-tl;dr; Submit a pull request linked to an issue. Use the required versions, follow code style and lint config.
+Submit a pull request linked to an issue. Use the required versions, follow code style and lint config.
 
 Before you submit a pull request make sure it passes lint by running `npm run lint`.
 
+## Adding a new command
+
+Create the following files in the folder `commands`:
+
+- `<command-name>.md`: the `help` content of your command
+- `<command-name>.ts`: exports a function that will run when the command is requested (you can use `msg.ts` as an example)
+
+Files should stick to the pattern of lowercase names with dashes.
+
+
+
+---
+
 ## Requirements
 
-There is a `.nvmrc` file in case you use nvm.
+Node & NPM versions:
 
 - node 8+
 - npm 5+
+
+### nvm (optional)
+
+There is a `.nvmrc` file in case you use nvm.
+
+### docker (optinal)
+
+There is a `docker-compose` file where you can configure env variables and run the config `local`.
+
+---
 
 ## Code guidelines
 

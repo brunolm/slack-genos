@@ -1,1 +1,1 @@
-FROM brunolm/node-image:7.4.0-onbuild
+FROM node:8.5.0
