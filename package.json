@@ -9,6 +9,10 @@
     "test": "npm run lint && mocha --compilers ts:ts-node/register,tsx:ts-node/register spec/**/*.ts",
     "lint": "tslint src/**/*.ts spec/**/*.ts"
   },
+  "engines": {
+    "node": ">8.0.0",
+    "npm": ">5.0.0"
+  },
   "keywords": [
     "slack",
     "bot",
