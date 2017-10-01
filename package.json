@@ -6,8 +6,8 @@
   "scripts": {
     "start": "ts-node src/index.ts",
     "dev": "nodemon --watch src/**/*.ts --ignore spec/**/*.ts -L --exec ts-node src/index.ts",
-    "test": "npm run lint && mocha --compilers ts:ts-node/register,tsx:ts-node/register spec/**/*.ts",
-    "lint": "tslint src/**/*.ts spec/**/*.ts"
+    "test": "npm run lint",
+    "lint": "tslint src/**/*.ts"
   },
   "engines": {
     "node": ">8.0.0",
@@ -34,10 +34,6 @@
     "typescript": "^2.1.5"
   },
   "devDependencies": {
-    "@types/chai": "^3.4.34",
-    "@types/mocha": "^2.2.38",
-    "chai": "^3.5.0",
-    "mocha": "^3.2.0",
     "nodemon": "^1.11.0",
     "tslint": "^4.3.1"
   }
