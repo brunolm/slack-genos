@@ -1,4 +1,5 @@
 import * as fs from 'fs';
+import * as glob from 'glob';
 import * as path from 'path';
 import * as slack from 'slack';
 import * as slackw from './slack-wrapper';
@@ -16,6 +17,10 @@ function loadCommands(dirPath: string, result: string[] = []) {
   const commandFiles = fs.readdirSync(dirPath);
 
   for (let commandFile of commandFiles) {
+    if (/^_/.test(commandFile)) {
+      continue;
+    }
+
     let dir = path.join(dirPath, commandFile);
     if (fs.statSync(dir).isDirectory()) {
       loadCommands(path.join(dirPath, commandFile), result);
@@ -26,6 +31,19 @@ function loadCommands(dirPath: string, result: string[] = []) {
   }
 
   return result;
+}
+
+function findHelpFile(filename: string) {
+  return new Promise<string>((resolve, reject) => {
+    glob('src/**/*.md', (err, files) => {
+      if (err) {
+        return reject(err);
+      }
+
+      const file = files.find((name) => name.indexOf(`/${filename}`) !== -1);
+      return resolve(file);
+    });
+  });
 }
 
 bot.hello(async () => {
@@ -66,9 +84,11 @@ bot.message(async (message) => {
           const params = { message, user, commandName, text, args };
 
           if (args.length >= 2 && /-h|--help/i.test(args[1])) {
+            const helpFile = await findHelpFile(commandName);
+
             await slackw.post({
               channel: message.channel,
-              text: fs.readFileSync(path.join(__dirname, `./commands/${commandName}.md`)).toString(),
+              text: helpFile ? fs.readFileSync(helpFile).toString() : 'No help available',
             });
           }
           else {
