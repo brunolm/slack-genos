@@ -2,6 +2,6 @@ import * as log4js from 'log4js';
 
 export default (namespace, level = log4js.levels.DEBUG) => {
   const log = log4js.getLogger(`slack-genos:${namespace}`);
-  log.setLevel(process.env.LOG_LEVEL || level);
+  log.setLevel(process.env.LOG_LEVEL as any || level);
   return log;
 };
