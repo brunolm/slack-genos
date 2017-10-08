@@ -1,4 +1,5 @@
 import * as fs from 'fs';
+import * as glob from 'glob';
 
 export function readdir(dirPath) {
   return new Promise<string[]>((resolve, reject) => {
@@ -55,6 +56,18 @@ export async function writeFile(filename: string, data: any) {
         return reject(err);
       }
       return resolve();
+    });
+  });
+}
+
+export function findFiles(pattern: string) {
+  return new Promise<string[]>((resolve, reject) => {
+    glob(pattern, (err, files) => {
+      if (err) {
+        return reject(err);
+      }
+
+      return resolve(files);
     });
   });
 }

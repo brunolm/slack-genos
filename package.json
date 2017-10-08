@@ -29,10 +29,12 @@
     "@types/express": "^4.0.37",
     "@types/glob": "^5.0.33",
     "@types/log4js": "^0.0.33",
+    "@types/moment": "^2.13.0",
     "@types/node": "^8.0.33",
     "btd-ahgora": "^2.3.1",
     "glob": "^7.1.2",
     "log4js": "^1.0.0",
+    "moment": "^2.18.1",
     "slack": "^8.1.2",
     "ts-node": "^3.3.0",
     "typescript": "^2.5.3"

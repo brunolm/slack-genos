@@ -3,4 +3,5 @@ node_modules/
 ts-node/
 custom/
 usersettings/
+memory.json
 npm-debug.log*

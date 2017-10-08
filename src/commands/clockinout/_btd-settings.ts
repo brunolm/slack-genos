@@ -73,8 +73,6 @@ export const parseArgs = (args) => {
   }
 
   return Object.keys(cmdArgs).reduce((a, key) => {
-    console.log('cmdArgs[key]', key, cmdArgs[key], typeof cmdArgs[key], !isNaN(cmdArgs[key]));
-
     if (typeof cmdArgs[key] !== 'undefined' && !isNaN(cmdArgs[key])) {
       a[key] = cmdArgs[key];
     }

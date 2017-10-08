@@ -10,12 +10,10 @@ import { Command } from '../../base-command';
 const cmd: Command = async ({ args, message, text, user }) => {
   const argsOptions = parseArgs(args) as any;
 
-  console.log('argsOptions', argsOptions);
-
   const userSettings = await settings.load(user.name);
   const options = { ...getSettings(userSettings.btd), ...argsOptions };
 
-  await settings.save(user.name, { btd: options });
+  await settings.save(user.name, { ...user, btd: options });
 
   await slackw.post({
     channel: message.channel,
